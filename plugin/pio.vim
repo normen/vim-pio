@@ -8,7 +8,7 @@ endif
 let g:loaded_vim_pio = 1
 
 command! -nargs=+ PIO  call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
-command! PIOCreateMakefile !cp $NORMEN/.vim/templates/PlatformIO-Makefile ./Makefile
+command! PIOCreateMakefile call <SID>PIOCreateMakefile()
 command! PIORefresh !platformio project init --ide vim
 command! -nargs=* PIONew call <SID>PIOBoardSelection(<q-args>)
 command! -nargs=+ PIOLibrary call <SID>PIOLibrarySelection(<q-args>)
@@ -47,6 +47,28 @@ function s:PIOLibraryList(args,L,P)
     endif
   endwhile
   return join(libnames,"\n")
+endfunction
+
+function s:PIOCreateMakefile()
+  let data=[
+    \ "# CREATED BY VIM-PIO",
+    \ "all:",
+    \ "	platformio -f -c vim run",
+    \ "",
+    \ "upload:",
+    \ "	platformio -f -c vim run --target upload",
+    \ "",
+    \ "clean:",
+    \ "	platformio -f -c vim run --target clean",
+    \ "",
+    \ "program:",
+    \ "	platformio -f -c vim run --target program",
+    \ "",
+    \ "uploadfs:",
+    \ "	platformio -f -c vim run --target uploadfs"]
+  if writefile(data, 'Makefile')
+    echomsg 'write error'
+  endif
 endfunction
 
 " show a list of libraries for selection
