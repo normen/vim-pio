@@ -107,6 +107,7 @@ function! s:PIOBoardSelection(args)
   execute 'silent $read !pio boards '.a:args
   setlocal ro nomodifiable
   1
+  call <SID>PIOCreateMakefile()
 endfunction
 
 " Open a named Term window only once (command tools)
