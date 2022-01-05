@@ -9,11 +9,12 @@ let g:loaded_vim_pio = 1
 
 command! -nargs=+ PIO  call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
 command! PIOCreateMakefile call <SID>PIOCreateMakefile()
-command! PIORefresh !platformio project init --ide vim
+command! PIOCreateMain call <SID>PIOCreateMain()
+command! PIORefresh call <SID>PIORefresh()
 command! -nargs=* PIONew call <SID>PIOBoardSelection(<q-args>)
 command! -nargs=+ PIOLibrary call <SID>PIOLibrarySelection(<q-args>)
-command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit !platformio project init --ide vim --board <args>
-command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall !platformio lib install '<args>'
+command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
+command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall call <SID>PIOInstall(<q-args>)
 
 " get a list of PlatformIO boards
 function s:PIOBoardList(args,L,P)
@@ -31,7 +32,7 @@ endfunction
 
 " get a list of PlatformIO boards
 function s:PIOLibraryList(args,L,P)
-  let all_libs = system("pio lib search ".a:args)
+  let all_libs = system('pio lib search "'.a:args.'"')
   let idx=0
   let hit=["jdf"]
   let libnames=[]
@@ -50,6 +51,10 @@ function s:PIOLibraryList(args,L,P)
 endfunction
 
 function s:PIOCreateMakefile()
+  if filereadable('Makefile')
+    echomsg 'Makefile exists!'
+    return
+  endif
   let data=[
     \ "# CREATED BY VIM-PIO",
     \ "all:",
@@ -71,6 +76,43 @@ function s:PIOCreateMakefile()
   endif
 endfunction
 
+function s:PIOCreateMain()
+  if filereadable('src/main.cpp')
+    echomsg 'main.cpp exists!'
+    return
+  endif
+  let data=[
+    \ "#include <Arduino.h>",
+    \ "",
+    \ "void setup(){",
+    \ "}",
+    \ "",
+    \ "void loop(){",
+    \ "}",
+    \ ""]
+  if writefile(data, 'src/main.cpp')
+    echomsg 'write error'
+  endif
+endfunction
+
+" refresh (initialize) a project with the ide vim to recreate .ccls file
+function! s:PIORefresh()
+  execute 'silent !platformio project init --ide vim'
+endfunction
+
+" initialitze a project with a board
+function! s:PIOInit(board)
+  execute 'silent !platformio project init --ide vim --board '.a:board
+  call <SID>PIOCreateMakefile()
+  call <SID>PIOCreateMain()
+endfunction
+
+" install a library using pio
+function! s:PIOInstall(library)
+  execute 'silent !platformio lib install "'.a:library.'"'
+  call <SID>PIORefresh()
+endfunction
+
 " show a list of libraries for selection
 function! s:PIOLibrarySelection(args)
   let winnr = bufwinnr('PIO Libraries')
@@ -83,9 +125,10 @@ function! s:PIOLibrarySelection(args)
     file 'PIO Libraries'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
-    nnoremap <buffer> <CR> :exec '!pio lib install "'.getline('.').'"'<CR>
+    nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
   endif
-  execute 'silent $read !pio lib search --noninteractive '.a:args
+  "echo 'Searching PIO libraries.. Press Ctrl-C to abort'
+  execute 'silent $read !platformio lib search --noninteractive "'.a:args.'"'
   setlocal ro nomodifiable
   1
 endfunction
@@ -102,12 +145,12 @@ function! s:PIOBoardSelection(args)
     file 'PIO Boards'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
     setlocal filetype=pioboards
-    nnoremap <buffer> <CR> :exec '!pio init --ide vim --board '.expand('<cWORD>')<CR>
+    nnoremap <buffer> <CR> :call <SID>PIOInit(expand('<cWORD>'))<CR>
   endif
-  execute 'silent $read !pio boards '.a:args
+  "echo 'Searching PIO boards..'
+  execute 'silent $read !platformio boards '.a:args
   setlocal ro nomodifiable
   1
-  call <SID>PIOCreateMakefile()
 endfunction
 
 " Open a named Term window only once (command tools)
