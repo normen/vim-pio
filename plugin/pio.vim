@@ -17,7 +17,7 @@ command! PIORemoveLibrary call <SID>PIOUninstallSelection()
 
 command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall call <SID>PIOInstall(<q-args>)
-command! -nargs=1 PIOUninstall call <SID>PIOUninstall(<q-args>)
+command! -nargs=1 -complete=custom,<SID>PIOInstalledList PIOUninstall call <SID>PIOUninstall(<q-args>)
 
 " get a list of PlatformIO boards
 function s:PIOBoardList(args,L,P)
@@ -34,20 +34,38 @@ function s:PIOBoardList(args,L,P)
 endfunction
 
 " get a list of PlatformIO boards
+function s:PIOInstalledList(args,L,P)
+  let all_libs = system('pio lib list')
+  let idx=0
+  let libnames=[]
+  while idx!=-1
+    let hit=matchlist(all_libs,'\n\([^\n]*\)\n===*',0,idx)
+    if !empty(hit)
+      let libnames=libnames + [get(hit,1)]
+      let idx=idx+1
+    else
+      let idx=-1
+    endif
+  endwhile
+  return join(libnames,"\n")
+endfunction
+
+" get a list of PlatformIO boards
 function s:PIOLibraryList(args,L,P)
   let all_libs = system('pio lib search "'.a:args.'"')
   let idx=0
-  let hit=["jdf"]
   let libnames=[]
-  while !empty(hit)
+  while idx!=-1
     " match 3 lib info lines:
     " Library Name
     " ============
     " #ID: 999
-    let hit=matchlist(all_libs,'\n\([^\n]*\)\n=*\n#ID: \([0-9]*\)\n',0,idx)
+    let hit=matchlist(all_libs,'\n\([^\n]*\)\n===*\n#ID: \([0-9]*\)\n',0,idx)
     if !empty(hit)
       let libnames=libnames + [get(hit,1)]
       let idx=idx+1
+    else
+      let idx=-1
     endif
   endwhile
   return join(libnames,"\n")
@@ -140,6 +158,7 @@ function! s:PIOUninstallSelection()
   endif
   "echo 'Searching PIO libraries.. Press Ctrl-C to abort'
   execute 'silent $read !platformio lib list'
+  execute append(0,"Help: Press [Enter] on a library name to uninstall")
   setlocal ro nomodifiable
   1
 endfunction
@@ -160,6 +179,7 @@ function! s:PIOInstallSelection(args)
   endif
   "echo 'Searching PIO libraries.. Press Ctrl-C to abort'
   execute 'silent $read !platformio lib search --noninteractive "'.a:args.'"'
+  execute append(0,"Help: Press [Enter] on a library name to install")
   setlocal ro nomodifiable
   1
 endfunction
@@ -180,6 +200,7 @@ function! s:PIOBoardSelection(args)
   endif
   "echo 'Searching PIO boards..'
   execute 'silent $read !platformio boards '.a:args
+  execute append(0,"Help: Press [Enter] on a board name to create a new project")
   setlocal ro nomodifiable
   1
 endfunction
