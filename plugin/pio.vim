@@ -12,7 +12,7 @@ command! -nargs=+ PIO  call s:OpenTermOnce('platformio ' . <q-args>, "Platform I
 "command! PIOCreateMain call <SID>PIOCreateMain()
 command! PIORefresh call <SID>PIORefresh()
 command! -nargs=* -complete=custom,<SID>PIOBoardList PIONewProject call <SID>PIOBoardSelection(<q-args>)
-command! -nargs=* -complete=custom,<SID>PIOLibraryList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
+command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
 command! PIORemoveLibrary call <SID>PIOUninstallSelection()
 
 command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)

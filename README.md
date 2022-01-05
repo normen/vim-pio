@@ -27,8 +27,8 @@ Plug 'normen/vim-pio'
   - Shows a list of boards, press enter on a board name to create a new project in the current folder based on that board.
 - `:PIOAddLibrary <search>`
   - Shows a list of libraries, press enter on a library name to add it to the project.
-- `:PIORemoveLibrary <search>`
-  - Shows a list of libraries, press enter on a library name to add it to the project.
+- `:PIORemoveLibrary`
+  - Shows a list of installed libraries, press enter on a library name to remove it from the project.
 - `:PIOInit <boardname>`
   - Creates a new project with the selected board name, supports auto-completion of the name.
 - `:PIOInstall <library>`
