@@ -8,7 +8,7 @@ syn spell notoplevel
 syn match piolibrariesInfo /.*\n===.*\n.*/ 
 syn match piolibrariesHeader /^[^#:=\.]*$/ contained containedin=piolibrariesInfo
 syn match piolibrariesId /^#ID.*/ contained containedin=piolibrariesInfo
-syn match piolibrariesKeywords /^Version:\|^Keywords:\|^Compatible frameworks:\|^Compatible platforms:\|^Authors:/
+syn match piolibrariesKeywords /^Version:\|^Keywords:\|^Compatible frameworks:\|^Compatible platforms:\|^Authors:\|^Homepage:\|^License:/
 syn match piolibrariesStorage /^Library Storage:/
 syn match piolibrariesHelp /^Help:/
 syn match piolibrariesFound /^Found [0-9]* libraries:/
