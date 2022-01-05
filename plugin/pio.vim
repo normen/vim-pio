@@ -183,7 +183,7 @@ function! s:PIOInstallSelection(args)
   endif
   echo 'Searching PlatformIO libraries.. Press Ctrl-C to abort'
   execute 'silent $read !platformio lib search --noninteractive "'.a:args.'"'
-  execute append(0,"Help: Press [Enter] on a library name to install")
+  execute append(0,"Help: Press [Enter] on a library name or ID to install")
   setlocal ro nomodifiable
   1
 endfunction
