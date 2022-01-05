@@ -135,7 +135,6 @@ function! s:PIOInstall(library)
   let name=a:library
   if a:library=~'^#ID:.*'
     let name=a:library[5:]
-    echo "yo"
   endif
   execute 'silent !platformio lib install "'.name.'"'
   call <SID>PIORefresh()
