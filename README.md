@@ -4,6 +4,8 @@ This is a collection of helper commands for VIM to ease the use of PlatformIO wi
 
 Its very much a WIP, its literally just parts of my vimrc outsourced into a plugin.
 
+[![asciicast](https://asciinema.org/a/n3eBrP10maMmwltDyUTTAgXNs.svg)](https://asciinema.org/a/n3eBrP10maMmwltDyUTTAgXNs)
+
 ## Features
 
 - Select board from a list
