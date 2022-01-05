@@ -35,6 +35,10 @@ of PlatformIO projects.
                           supplied search terms. Press <CR> on a name to 
                           install that library.
 
+                          If searching for libraries takes too long you can
+                          cancel the search with <Ctrl-C> and see the results
+                          that were found already.
+
                                                 *:PIORemoveLibrary*
 :PIORemoveLibrary         Shows a list of installed libraries, press <CR> on
                           a name to uninstall that library.
