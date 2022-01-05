@@ -69,7 +69,8 @@ The plugin creates a `Makefile` for the project with the following targets:
 - `program`
 - `uploadfs`
 
-This way you can use a simple `:make upload` to compile and upload your code to your microcontroller.
+This way you can use a simple `:make upload` to compile and upload your code
+to your microcontroller.
 
 OTHER                                           *pio-other*
 
