@@ -8,13 +8,16 @@ endif
 let g:loaded_vim_pio = 1
 
 command! -nargs=+ PIO  call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
-command! PIOCreateMakefile call <SID>PIOCreateMakefile()
-command! PIOCreateMain call <SID>PIOCreateMain()
+"command! PIOCreateMakefile call <SID>PIOCreateMakefile()
+"command! PIOCreateMain call <SID>PIOCreateMain()
 command! PIORefresh call <SID>PIORefresh()
-command! -nargs=* PIONew call <SID>PIOBoardSelection(<q-args>)
-command! -nargs=+ PIOLibrary call <SID>PIOLibrarySelection(<q-args>)
+command! -nargs=* -complete=custom,<SID>PIOBoardList PIONewProject call <SID>PIOBoardSelection(<q-args>)
+command! -nargs=* -complete=custom,<SID>PIOLibraryList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
+command! PIORemoveLibrary call <SID>PIOUninstallSelection()
+
 command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall call <SID>PIOInstall(<q-args>)
+command! -nargs=1 PIOUninstall call <SID>PIOUninstall(<q-args>)
 
 " get a list of PlatformIO boards
 function s:PIOBoardList(args,L,P)
@@ -98,6 +101,7 @@ endfunction
 " refresh (initialize) a project with the ide vim to recreate .ccls file
 function! s:PIORefresh()
   execute 'silent !platformio project init --ide vim'
+  execute 'redraw!'
 endfunction
 
 " initialitze a project with a board
@@ -105,6 +109,7 @@ function! s:PIOInit(board)
   execute 'silent !platformio project init --ide vim --board '.a:board
   call <SID>PIOCreateMakefile()
   call <SID>PIOCreateMain()
+  execute 'redraw!'
 endfunction
 
 " install a library using pio
@@ -113,8 +118,34 @@ function! s:PIOInstall(library)
   call <SID>PIORefresh()
 endfunction
 
+" install a library using pio
+function! s:PIOUninstall(library)
+  execute 'silent !platformio lib uninstall "'.a:library.'"'
+  call <SID>PIORefresh()
+endfunction
+
 " show a list of libraries for selection
-function! s:PIOLibrarySelection(args)
+function! s:PIOUninstallSelection()
+  let winnr = bufwinnr('PIO Libraries')
+  if(winnr>0)
+    execute winnr.'wincmd w'
+    setlocal noro modifiable
+    execute '%d'
+  else
+    bo new
+    file 'PIO Libraries'
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
+    setlocal filetype=piolibraries
+    nnoremap <buffer> <CR> :call <SID>PIOUninstall(getline('.'))<CR>:call <SID>PIOUninstallSelection()<CR>
+  endif
+  "echo 'Searching PIO libraries.. Press Ctrl-C to abort'
+  execute 'silent $read !platformio lib list'
+  setlocal ro nomodifiable
+  1
+endfunction
+
+" show a list of libraries for selection
+function! s:PIOInstallSelection(args)
   let winnr = bufwinnr('PIO Libraries')
   if(winnr>0)
     execute winnr.'wincmd w'
