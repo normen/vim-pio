@@ -18,7 +18,7 @@ COMMANDS                                        *pio-commands*
 The commands are the core of the plugin, allowing for basic control
 of PlatformIO projects.
 
-                                                *pio-:PIO*
+                                                *:PIO*
 :PIO [args]               Works like the shell command, uses a single
                           term window.
 
