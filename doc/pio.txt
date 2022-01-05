@@ -56,8 +56,11 @@ of PlatformIO projects.
                           completion of the name. No list is displayed.
 
                                                 *:PIORefresh*
-:PIORefresh               Creates a new project with the selected board name,
-                          supports auto-completion of the name.
+:PIORefresh               Refreshes the project files, especially the `.ccls`
+                          file needed for code completion.
+
+                          This usually happens automatically if you manage
+                          the libraries with this plugin.
 
 
 MAKEFILE                                        *pio-Makefile*
