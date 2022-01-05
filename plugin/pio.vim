@@ -52,7 +52,7 @@ function! s:PIOCommandList(args,L,P)
 endfunction
 
 " get a list of PlatformIO boards
-function s:PIOBoardList(args,L,P)
+function! s:PIOBoardList(args,L,P)
   let raw_boards=systemlist("pio boards ".a:args)
   let boards=[]
   for boardline in raw_boards
@@ -66,7 +66,7 @@ function s:PIOBoardList(args,L,P)
 endfunction
 
 " get a list of PlatformIO boards
-function s:PIOInstalledList(args,L,P)
+function! s:PIOInstalledList(args,L,P)
   let all_libs = system('pio lib list')
   let idx=0
   let libnames=[]
@@ -83,7 +83,7 @@ function s:PIOInstalledList(args,L,P)
 endfunction
 
 " get a list of PlatformIO boards
-function s:PIOLibraryList(args,L,P)
+function! s:PIOLibraryList(args,L,P)
   let all_libs = system('pio lib search "'.a:args.'"')
   let idx=0
   let libnames=[]
@@ -103,7 +103,7 @@ function s:PIOLibraryList(args,L,P)
   return join(libnames,"\n")
 endfunction
 
-function s:PIOCreateMakefile()
+function! s:PIOCreateMakefile()
   if filereadable('Makefile')
     echomsg 'Makefile exists!'
     return
@@ -129,7 +129,7 @@ function s:PIOCreateMakefile()
   endif
 endfunction
 
-function s:PIOCreateMain()
+function! s:PIOCreateMain()
   if filereadable('src/main.cpp')
     echomsg 'main.cpp exists!'
     return
