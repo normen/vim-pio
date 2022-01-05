@@ -59,8 +59,21 @@ of PlatformIO projects.
 :PIORefresh               Creates a new project with the selected board name,
                           supports auto-completion of the name.
 
+
+MAKEFILE                                        *pio-Makefile*
+ 
+The plugin creates a `Makefile` for the project with the following targets:
+- `all` (default)
+- `upload`
+- `clean`
+- `program`
+- `uploadfs`
+
+This way you can use a simple `:make upload` to compile and upload your code to your microcontroller.
+
 OTHER                                           *pio-other*
 
+Code completion~
 To get code completion please install ccls and a vim plugin to handle
 language servers (e.g. coc-nvim).
 

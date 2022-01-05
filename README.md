@@ -20,6 +20,8 @@ Plug 'normen/vim-pio'
 
 ## Documentation
 
+Use `:h pio` in vim to access the documentation.
+
 ### Commands
 - `:PIO`
   - Mirrors the command line command and opens a term window. Note theres always only one PIO window.
@@ -29,14 +31,6 @@ Plug 'normen/vim-pio'
   - Shows a list of libraries, press enter on a library name to add it to the project.
 - `:PIORemoveLibrary`
   - Shows a list of installed libraries, press enter on a library name to remove it from the project.
-- `:PIOInit <boardname>`
-  - Creates a new project with the selected board name, supports auto-completion of the name.
-- `:PIOInstall <library>`
-  - Installs a library by name or id, supports auto-completion of the name.
-- `:PIOUninstall <library>`
-  - Uninstalls a library by name or id, supports auto-completion of the name.
-- `:PIORefresh`
-  - Refreshes the `.ccls` file needed for code completion (see below)
 
 ### Makefile
 The plugin creates a `Makefile` for the project with the following targets:
