@@ -4,6 +4,14 @@ This is a collection of helper commands for VIM to ease the use of PlatformIO wi
 
 Its very much a WIP, its literally just parts of my vimrc outsourced into a plugin.
 
+## Features
+
+- Select board from a list
+- Create project incl. Makefile
+- Search and install libararies from a list
+- Errors and warnings with jumpmarks to relevant code files
+- Supports code completion (needs language server plugin, see below)
+
 ## Installation
 With Plug:
 ```

@@ -126,14 +126,14 @@ endfunction
 
 " show a list of libraries for selection
 function! s:PIOUninstallSelection()
-  let winnr = bufwinnr('PIO Libraries')
+  let winnr = bufwinnr('PIO Uninstall')
   if(winnr>0)
     execute winnr.'wincmd w'
     setlocal noro modifiable
     execute '%d'
   else
     bo new
-    file 'PIO Libraries'
+    file 'PIO Uninstall'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOUninstall(getline('.'))<CR>:call <SID>PIOUninstallSelection()<CR>
@@ -146,14 +146,14 @@ endfunction
 
 " show a list of libraries for selection
 function! s:PIOInstallSelection(args)
-  let winnr = bufwinnr('PIO Libraries')
+  let winnr = bufwinnr('PIO Install')
   if(winnr>0)
     execute winnr.'wincmd w'
     setlocal noro modifiable
     execute '%d'
   else
     bo new
-    file 'PIO Libraries'
+    file 'PIO Install'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
