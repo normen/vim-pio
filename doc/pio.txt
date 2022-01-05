@@ -34,9 +34,20 @@ of PlatformIO projects.
                           folder and a `main.cpp` file in the `src` folder.
 
                                                 *:PIOAddLibrary*
-:PIOAddLibrary {args}     Shows a list of available libraries based on the
-                          supplied search terms. Press <CR> on a name or ID
-                          to install that library.
+:PIOAddLibrary {search}   Shows a list of available libraries based on the
+                          supplied search terms (see below).
+
+                          You can use the following syntax to search for
+                          specifics like keywords, headers etc.
+
+                          - `id:123`
+                          - `keyword:mqtt`
+                          - `header:RH_ASK.h`
+                          - `framework:Arduino`
+                          - `platform:espressif8266`
+                          - `author:Adafruit`
+
+                          Press <CR> on a name or ID to install that library.
 
                           If searching for libraries takes too long you can
                           cancel the search with <Ctrl-C> and see the results
