@@ -155,7 +155,7 @@ function! s:PIOUninstallSelection()
     execute '%d'
   else
     bo new
-    file 'PIO Uninstall'
+    silent file 'PIO Uninstall'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOUninstall(getline('.'))<CR>:call <SID>PIOUninstallSelection()<CR>
@@ -176,12 +176,12 @@ function! s:PIOInstallSelection(args)
     execute '%d'
   else
     bo new
-    file 'PIO Install'
+    silent file 'PIO Install'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
   endif
-  "echo 'Searching PIO libraries.. Press Ctrl-C to abort'
+  echo 'Searching PIO libraries.. Press Ctrl-C to abort'
   execute 'silent $read !platformio lib search --noninteractive "'.a:args.'"'
   execute append(0,"Help: Press [Enter] on a library name to install")
   setlocal ro nomodifiable
@@ -197,7 +197,7 @@ function! s:PIOBoardSelection(args)
     execute '%d'
   else
     bo new
-    file 'PIO Boards'
+    silent file 'PIO Boards'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
     setlocal filetype=pioboards
     nnoremap <buffer> <CR> :call <SID>PIOInit(expand('<cWORD>'))<CR>

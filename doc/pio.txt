@@ -23,17 +23,20 @@ of PlatformIO projects.
                           term window.
 
                                                 *:PIONewProject*
-:PIONewProject [args]     Creates a new PlatformIO project, shows a list of
-                          boards to select from. You can supply search terms
-                          to limit the board list, e.g. 'esp32'.
+:PIONewProject [args]     Shows a list of boards to select from. You can
+                          supply search terms to limit the board list, e.g.
+                          'esp32'.
 
-                          This will also create a Makefile as well as a
-                          main.cpp file in the src folder.
+                          Pressing <CR> on a board name will create a new
+                          PlatformIO Project in the current folder.
+
+                          This will also create a `Makefile` in the root 
+                          folder and a `main.cpp` file in the `src` folder.
 
                                                 *:PIOAddLibrary*
 :PIOAddLibrary {args}     Shows a list of available libraries based on the
-                          supplied search terms. Press <CR> on a name to 
-                          install that library.
+                          supplied search terms. Press <CR> on a name or ID
+                          to install that library.
 
                           If searching for libraries takes too long you can
                           cancel the search with <Ctrl-C> and see the results
@@ -45,7 +48,8 @@ of PlatformIO projects.
 
                                                 *:PIOInit*
 :PIOInit {args}           Creates a new project with the selected board name,
-                          supports auto-completion of the name.
+                          supports auto-completion of the name. No list is
+                          displayed.
 
                                                 *:PIOInstall*
 :PIOInstall {args}        Installs a library by name or id, supports auto-
@@ -78,8 +82,8 @@ to your microcontroller.
 OTHER                                           *pio-other*
 
 Code completion~
-To get code completion please install ccls and a vim plugin to handle
-language servers (e.g. coc-nvim).
+To get code completion please install `ccls` and a vim plugin to handle
+language servers (e.g. `coc-nvim`).
 
 ABOUT                                           *pio-about*
 
