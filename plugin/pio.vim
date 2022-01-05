@@ -7,7 +7,7 @@ if (exists("g:loaded_vim_pio") && g:loaded_vim_pio) || &cp
 endif
 let g:loaded_vim_pio = 1
 
-command! -nargs=+ PIO  call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
+command! -nargs=+ -complete=custom,<SID>PIOCommandList PIO call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
 "command! PIOCreateMakefile call <SID>PIOCreateMakefile()
 "command! PIOCreateMain call <SID>PIOCreateMain()
 command! PIORefresh call <SID>PIORefresh()
@@ -18,6 +18,38 @@ command! PIORemoveLibrary call <SID>PIOUninstallSelection()
 command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall call <SID>PIOInstall(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOInstalledList PIOUninstall call <SID>PIOUninstall(<q-args>)
+
+" get a list of PlatformIO commands
+function! s:PIOCommandList(args,L,P)
+  if a:L=~'^PIO [^ ]*$'
+  else
+    return ""
+  endif
+  let commands = [
+        \ 'access',
+        \ 'account',
+        \ 'boards',
+        \ 'check',
+        \ 'ci',
+        \ 'debug',
+        \ 'device',
+        \ 'home',
+        \ 'lib',
+        \ 'org',
+        \ 'package',
+        \ 'platform',
+        \ 'project',
+        \ 'remote',
+        \ 'run',
+        \ 'settings',
+        \ 'team',
+        \ 'test',
+        \ 'update',
+        \ 'upgrade',
+        \ 'access',
+        \ ]
+  return join(commands,"\n")
+endfunction
 
 " get a list of PlatformIO boards
 function s:PIOBoardList(args,L,P)
