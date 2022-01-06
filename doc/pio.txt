@@ -37,12 +37,12 @@ of PlatformIO projects.
                           PlatformIO Project in the current folder or add
                           the board to an existing project.
 
-                          That is effectively the same as running the command
+                          It is effectively the same as running the command
                           `:PIO project init --ide vim --board {boardname}`
 
-                          However this will also create a |Makefile| in the root 
-                          folder and a "main.cpp" file in the "src" folder if
-                          they don't exist.
+                          However `:PIONewProject` will also create a
+                          |Makefile| in the root folder and a "main.cpp" file
+                          in the "src" folder if they don't exist.
 
                           Running the command `:PIO boards` will display the
                           same list with the same functions.
