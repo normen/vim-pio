@@ -12,7 +12,7 @@ command! -nargs=+ -complete=custom,<SID>PIOCommandList PIO call s:OpenTermOnce('
 "command! PIOCreateMain call <SID>PIOCreateMain()
 command! PIORefresh call <SID>PIORefresh()
 command! -nargs=* -complete=custom,<SID>PIOBoardList PIONewProject call <SID>PIOBoardSelection(<q-args>)
-command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
+command! -nargs=1 -complete=custom,<SID>PIOKeywordList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
 command! PIORemoveLibrary call <SID>PIOUninstallSelection()
 
 command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
@@ -47,6 +47,19 @@ function! s:PIOCommandList(args,L,P)
         \ 'update',
         \ 'upgrade',
         \ 'access',
+        \ ]
+  return join(commands,"\n")
+endfunction
+
+" get a list of search keywords
+function! s:PIOKeywordList(args,L,P)
+  let commands = [
+        \ 'id:',
+        \ 'keyword:',
+        \ 'header:',
+        \ 'framework:',
+        \ 'platform:',
+        \ 'author:',
         \ ]
   return join(commands,"\n")
 endfunction
