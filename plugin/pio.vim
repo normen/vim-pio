@@ -203,7 +203,7 @@ endfunction
 
 " initialitze a project with a board
 function! s:PIOInit(board)
-  execute 'silent !platformio project init --ide vim --board '.a:board
+  execute '!platformio project init --ide vim --board '.a:board
   call <SID>PIOCreateMakefile()
   call <SID>PIOCreateMain()
   execute 'redraw!'
@@ -215,13 +215,13 @@ function! s:PIOInstall(library)
   if a:library=~'^#ID:.*'
     let name=a:library[5:]
   endif
-  execute 'silent !platformio lib install "'.name.'"'
+  execute '!platformio lib install "'.name.'"'
   call <SID>PIORefresh()
 endfunction
 
 " install a library using pio
 function! s:PIOUninstall(library)
-  execute 'silent !platformio lib uninstall "'.a:library.'"'
+  execute '!platformio lib uninstall "'.a:library.'"'
   call <SID>PIORefresh()
 endfunction
 
