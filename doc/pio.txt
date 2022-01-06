@@ -37,8 +37,12 @@ of PlatformIO projects.
                           PlatformIO Project in the current folder or add
                           the board to an existing project.
 
-                          This will also create a |Makefile| in the root 
-                          folder and a "main.cpp" file in the "src" folder.
+                          That is effectively the same as running the command
+                          `:PIO project init --ide vim --board {boardname}`
+
+                          However this will also create a |Makefile| in the root 
+                          folder and a "main.cpp" file in the "src" folder if
+                          they don't exist.
 
                           Running the command `:PIO boards` will display the
                           same list with the same functions.
@@ -76,6 +80,10 @@ of PlatformIO projects.
                           `:PIO project init --ide vim --board {args}`
                           or
                           `:PIO project init --ide vim`
+
+                          However this will also create a |Makefile| in the root 
+                          folder and a "main.cpp" file in the "src" folder if
+                          they don't exist.
 
                                                 *:PIOInstall*
 :PIOInstall {args}        Installs a library by name or id, supports auto-
