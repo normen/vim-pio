@@ -128,7 +128,7 @@ endfunction
 " loads keywords from ini to narrow down completion search
 function! s:PIOLibraryList(args,L,P)
   let iniKeywords = <SID>PIOGetIniKeywords()
-  let all_libs = system('pio lib search "'.join(iniKeywords," ").' '.a:args.'"')
+  let all_libs = system('pio lib search "'.join(iniKeywords," ").' '.a:args.'*"')
   let idx=0
   let libnames=[]
   while idx!=-1
