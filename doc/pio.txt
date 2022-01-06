@@ -73,9 +73,9 @@ of PlatformIO projects.
                           refresh the project files.
 
                           This yields the same result as running the command
-                          `:PIO init --ide vim --board {args}`
+                          `:PIO project init --ide vim --board {args}`
                           or
-                          `:PIO init --ide vim`
+                          `:PIO project init --ide vim`
 
                                                 *:PIOInstall*
 :PIOInstall {args}        Installs a library by name or id, supports auto-
