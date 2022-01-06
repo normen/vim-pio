@@ -16,7 +16,7 @@ command! -nargs=* -complete=custom,<SID>PIOBoardList PIONewProject call <SID>PIO
 command! -nargs=1 -complete=custom,<SID>PIOKeywordList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
 command! PIORemoveLibrary call <SID>PIOUninstallSelection()
 
-command! -nargs=1 -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
+command! -nargs=* -complete=custom,<SID>PIOBoardList PIOInit call <SID>PIOInit(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOLibraryList PIOInstall call <SID>PIOInstall(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOInstalledList PIOUninstall call <SID>PIOUninstall(<q-args>)
 
@@ -203,7 +203,11 @@ endfunction
 
 " initialitze a project with a board
 function! s:PIOInit(board)
-  execute '!platformio project init --ide vim --board '.a:board
+  if empty(a:board)
+    execute '!platformio project init --ide vim'
+  else
+    execute '!platformio project init --ide vim --board '.a:board
+  endif
   call <SID>PIOCreateMakefile()
   call <SID>PIOCreateMain()
   execute 'redraw!'

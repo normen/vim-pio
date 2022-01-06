@@ -65,7 +65,8 @@ of PlatformIO projects.
                                                 *:PIOInit*
 :PIOInit {args}           Creates a new project with the selected board name,
                           supports auto-completion of the name. No list is
-                          displayed.
+                          displayed. Can also be used without an argument to
+                          refresh the project files.
 
                                                 *:PIOInstall*
 :PIOInstall {args}        Installs a library by name or id, supports auto-
