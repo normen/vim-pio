@@ -20,7 +20,7 @@ of PlatformIO projects.
 
                                                 *:PIO*
 :PIO [args]               Works like the shell command, uses a single
-                          term window.
+                          `:term` window.
 
                           E.g. use `:PIO device monitor` to show the serial
                           port monitor log.
@@ -33,8 +33,8 @@ of PlatformIO projects.
                           Pressing <CR> on a board name will create a new
                           PlatformIO Project in the current folder.
 
-                          This will also create a `Makefile` in the root 
-                          folder and a `main.cpp` file in the `src` folder.
+                          This will also create a |Makefile| in the root 
+                          folder and a "main.cpp" file in the "src" folder.
 
                                                 *:PIOAddLibrary*
 :PIOAddLibrary {search}   Shows a list of available libraries based on the
@@ -44,12 +44,12 @@ of PlatformIO projects.
                           You can use the following syntax to search for
                           specifics like keywords, headers etc.
 
-                          - `id:123`
-                          - `keyword:mqtt`
-                          - `header:RH_ASK.h`
-                          - `framework:Arduino`
-                          - `platform:espressif8266`
-                          - `author:Adafruit`
+                          - id:123
+                          - keyword:mqtt
+                          - header:RH_ASK.h
+                          - framework:Arduino
+                          - platform:espressif8266
+                          - author:Adafruit
 
                           Auto completion for the command will pick up on
                           the platforms and frameworks in your project and
@@ -73,7 +73,7 @@ of PlatformIO projects.
                           completion of the name. No list is displayed.
 
                                                 *:PIORefresh*
-:PIORefresh               Refreshes the project files, especially the `.ccls`
+:PIORefresh               Refreshes the project files, especially the ".ccls"
                           file needed for code completion.
 
                           This usually happens automatically if you manage
@@ -82,12 +82,12 @@ of PlatformIO projects.
 
 MAKEFILE                                        *pio-Makefile*
  
-The plugin creates a `Makefile` for the project with the following targets:
-- `all` (default)
-- `upload`
-- `clean`
-- `program`
-- `uploadfs`
+The plugin creates a |Makefile| for the project with the following targets:
+- all (default)
+- upload
+- clean
+- program
+- uploadfs
 
 This way you can use a simple `:make upload` to compile and upload your code
 to your microcontroller.
@@ -95,8 +95,8 @@ to your microcontroller.
 OTHER                                           *pio-other*
 
 Code completion~
-To get code completion please install `ccls` and a vim plugin to handle
-language servers (e.g. `coc-nvim`).
+To get code completion please install |ccls| and a vim plugin to handle
+language servers (e.g. |coc-nvim|).
 
 ABOUT                                           *pio-about*
 
