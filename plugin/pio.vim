@@ -49,7 +49,6 @@ function! s:PIOCommandList(args,L,P)
     let line_info=matchlist(a:L,'^PIO \([^ ]*\) .*$')
     if !empty(line_info)
       let name = get(line_info,1)
-      echo name
       return join(get(commands,name,[]),"\n")
     endif
   endif
