@@ -55,8 +55,8 @@ of PlatformIO projects.
                           - author:Adafruit
 
                           The platforms and frameworks of your project are
-                          always added to the search, use the `:PIO` command
-                          directly to avoid this.
+                          always added to the search, use the command
+                          `:PIO lib search` directly to avoid this.
 
                                                 *:PIORemoveLibrary*
 :PIORemoveLibrary         Shows a list of installed libraries, press <CR> on
