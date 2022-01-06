@@ -297,10 +297,10 @@ function! s:OpenTermOnce(command, buffername)
     execute winnr.'wincmd c'
   endif
   call term_start(a:command,{'term_name':a:buffername})
-  if a:command =~ '^platformio lib search.*$'
+  if a:command =~ '^platformio *lib *search.*$'
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
-  elseif a:command =~ '^platformio boards.*$'
+  elseif a:command =~ '^platformio *boards.*$'
     setlocal filetype=pioboards
     nnoremap <buffer> <CR> :call <SID>PIOInit(expand('<cWORD>'))<CR>
   else
