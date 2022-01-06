@@ -35,7 +35,8 @@ of PlatformIO projects.
 
                                                 *:PIOAddLibrary*
 :PIOAddLibrary {search}   Shows a list of available libraries based on the
-                          supplied search terms (see below).
+                          supplied search terms. Press <CR> on a name or ID
+                          in the list to install that library.
 
                           You can use the following syntax to search for
                           specifics like keywords, headers etc.
@@ -47,11 +48,9 @@ of PlatformIO projects.
                           - `platform:espressif8266`
                           - `author:Adafruit`
 
-                          Press <CR> on a name or ID to install that library.
-
-                          If searching for libraries takes too long you can
-                          cancel the search with <Ctrl-C> and see the results
-                          that were found already.
+                          Auto completion for the command will pick up on
+                          the platforms and frameworks in your project and
+                          offer those as auto-complete items.
 
                                                 *:PIORemoveLibrary*
 :PIORemoveLibrary         Shows a list of installed libraries, press <CR> on

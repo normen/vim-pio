@@ -61,6 +61,21 @@ function! s:PIOKeywordList(args,L,P)
         \ 'platform:',
         \ 'author:',
         \ ]
+  let pio_ini = readfile('platformio.ini')
+  if !empty(pio_ini)
+    for line in pio_ini
+      if line =~ '^platform *=.*'
+        let pltf = substitute(line,"=",":","g")
+        let pltf = substitute(pltf," ","","g")
+        let commands = commands + [pltf]
+      endif
+      if line =~ '^framework *=.*'
+        let pltf = substitute(line,"=",":","g")
+        let pltf = substitute(pltf," ","","g")
+        let commands = commands + [pltf]
+      endif
+    endfor
+  endif
   return join(commands,"\n")
 endfunction
 
