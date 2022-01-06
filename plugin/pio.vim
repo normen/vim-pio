@@ -283,5 +283,12 @@ function! s:OpenTermOnce(command, buffername)
     execute winnr.'wincmd c'
   endif
   call term_start(a:command,{'term_name':a:buffername})
+  if a:command =~ '^platformio lib search.*$'
+    setlocal filetype=piolibraries
+    nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
+  else
+    setlocal filetype=
+    silent! nunmap <buffer> <CR>
+  endif
 endfunction
 
