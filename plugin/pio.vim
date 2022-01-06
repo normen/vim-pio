@@ -7,7 +7,7 @@ if (exists("g:loaded_vim_pio") && g:loaded_vim_pio) || &cp
 endif
 let g:loaded_vim_pio = 1
 
-command! -nargs=+ -complete=custom,<SID>PIOCommandList PIO call s:OpenTermOnce('platformio ' . <q-args>, "Platform IO")
+command! -nargs=+ -complete=custom,<SID>PIOCommandList PIO call <SID>OpenTermOnce('platformio ' . <q-args>, "Platform IO")
 "command! PIOCreateMakefile call <SID>PIOCreateMakefile()
 "command! PIOCreateMain call <SID>PIOCreateMain()
 command! PIORefresh call <SID>PIORefresh()
