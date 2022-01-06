@@ -300,6 +300,9 @@ function! s:OpenTermOnce(command, buffername)
   if a:command =~ '^platformio lib search.*$'
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
+  elseif a:command =~ '^platformio boards.*$'
+    setlocal filetype=pioboards
+    nnoremap <buffer> <CR> :call <SID>PIOInit(expand('<cWORD>'))<CR>
   else
     setlocal filetype=
     silent! nunmap <buffer> <CR>
