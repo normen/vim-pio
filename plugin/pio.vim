@@ -21,34 +21,39 @@ command! -nargs=1 -complete=custom,<SID>PIOInstalledList PIOUninstall call <SID>
 
 " get a list of PlatformIO commands
 function! s:PIOCommandList(args,L,P)
+  let commands = {
+        \ 'access':["grant","list","private","public","revoke", "-h"],
+        \ 'account':["destroy","forgot","login","logout","password","register","show","token","update","-h"],
+        \ 'boards':["--installed","--json-output","-h"],
+        \ 'check':["--environment","--project-dir","--project-conf","--pattern","--flags","--severity","--silent","--json-output","--fail-on-defect","--skip-packages","-h"],
+        \ 'ci':["--lib","--exclude","--board","--build-dir","--keep-build-dir","--project-conf","project-option","--verbose","--help"],
+        \ 'debug':["--project-dir","--project-conf","--environment","--load-mode","--verbose","--interface", "-h"],
+        \ 'device':["list", "monitor","-h"],
+        \ 'home':["--port","--host","--no-open","--shutdown-timeout","--session-id","-h"],
+        \ 'lib':["builtin","install","list","register","search","show","stats","uninstall","update"],
+        \ 'org':["add","create","destroy","list","remove","update","-h"],
+        \ 'package':["pack","publish","unpublish","-h"],
+        \ 'platform':["frameworks","install","list","search","show","uninstall","update","-h"],
+        \ 'project':["config","data","init","-h"],
+        \ 'remote':["agent","device","run","test","update","-h"],
+        \ 'run':["--environment","--target","--upload-port","--project-dir","--project-conf","--jobs","--silent","--verbose","--disable-auto-clean","--list-targets","-h"],
+        \ 'settings':["get","reset","set","-h"],
+        \ 'team':["add","create","destroy","list","remove","update","-h"],
+        \ 'test':["-e","-f","-i","--upload-port","-d","-c","--without-building","--without-uploading","--without-testing","--no-reset","--monitor-rts","--monitor-dtr","-v","-h"],
+        \ 'update':["--core-packages","--only-check","--dry-run","-h"],
+        \ 'upgrade':[],
+        \ }
   if a:L=~'^PIO [^ ]*$'
-  else
-    return ""
+    return join(keys(commands),"\n")
+  elseif a:L=~'^PIO [^ ]* .*$'
+    let line_info=matchlist(a:L,'^PIO \([^ ]*\) .*$')
+    if !empty(line_info)
+      let name = get(line_info,1)
+      echo name
+      return join(get(commands,name,[]),"\n")
+    endif
   endif
-  let commands = [
-        \ 'access',
-        \ 'account',
-        \ 'boards',
-        \ 'check',
-        \ 'ci',
-        \ 'debug',
-        \ 'device',
-        \ 'home',
-        \ 'lib',
-        \ 'org',
-        \ 'package',
-        \ 'platform',
-        \ 'project',
-        \ 'remote',
-        \ 'run',
-        \ 'settings',
-        \ 'team',
-        \ 'test',
-        \ 'update',
-        \ 'upgrade',
-        \ 'access',
-        \ ]
-  return join(commands,"\n")
+  return ""
 endfunction
 
 " get a list of search keywords

@@ -22,6 +22,9 @@ of PlatformIO projects.
 :PIO [args]               Works like the shell command, uses a single
                           term window.
 
+                          E.g. use `:PIO device monitor` to show the serial
+                          port monitor log.
+
                                                 *:PIONewProject*
 :PIONewProject [args]     Shows a list of boards to select from. You can
                           supply search terms to limit the board list, e.g.
