@@ -15,21 +15,24 @@ Its very much a WIP, its literally just parts of my vimrc outsourced into a plug
 - Supports code completion (needs language server plugin, see below)
 
 ## Installation
-With Plug add this to your `vimrc`:
-```
-Plug 'normen/vim-pio'
-```
+### PlatformIO Core
+Make sure you have the [PlatformIO command line tools](https://docs.platformio.org/en/latest/core/installation.html#piocore-install-shell-commands) installed.
 
-Make sure you have the PlatformIO command line tools installed, e.g. on MacOS do:
+On MacOS with [Homebrew](https://brew.sh) installed just do:
 ```
 brew install platformio
 ```
 
+### Plugin
+With [vim-plug](https://github.com/junegunn/vim-plug) installed, add this to your `vimrc`:
+```
+Plug 'normen/vim-pio'
+```
 ## Documentation
 
-Use `:h pio` in vim to access the documentation.
+Use `:h pio` in vim for documentation of all commands and options.
 
-### Commands
+### Basic Commands
 - `:PIO`
   - Mirrors the command line command and opens a term window. Note theres always only one PIO window.
 - `:PIONewProject <search>`
@@ -40,14 +43,7 @@ Use `:h pio` in vim to access the documentation.
   - Shows a list of installed libraries, press enter on a library name to remove it from the project.
 
 ### Makefile
-The plugin creates a `Makefile` for the project with the following targets:
-- `all` (default)
-- `upload`
-- `clean`
-- `program`
-- `uploadfs`
-
-This way you can use a simple `:make upload` to compile and upload your code to your microcontroller.
+The plugin creates a `Makefile`, this way you can use a simple `:make` to compile or a `:make upload` to compile and upload your code to your microcontroller.
 
 ## Other things
 ### Code completion
@@ -81,8 +77,8 @@ The following is an example for MacOS with [Homebrew](https://brew.sh) installed
 ```
 
 ### Background Make
-I suggest also installing the awesome [vim-dispatch](https://github.com/tpope/vim-dispatch) plugin by tpope to be able to run compilations in the background.
+I suggest also installing the awesome [vim-dispatch](https://github.com/tpope/vim-dispatch) plugin by tpope to be able to use `:Make` instead of `:make` to run compilations in the background.
 
-### PlatformIO
-This plugin is based on the awesome built-in VIM support of PlatformIO, check out the information [here](https://docs.platformio.org/en/latest/integration/ide/vim.html)
+### Further Info
+This plugin is based on the built-in VIM and ccls support of PlatformIO, check out the information [here](https://docs.platformio.org/en/latest/integration/ide/vim.html)
 
