@@ -15,9 +15,14 @@ Its very much a WIP, its literally just parts of my vimrc outsourced into a plug
 - Supports code completion (needs language server plugin, see below)
 
 ## Installation
-With Plug:
+With Plug add this to your `vimrc`:
 ```
 Plug 'normen/vim-pio'
+```
+
+Make sure you have the PlatformIO command line tools installed, e.g. on MacOS do:
+```
+brew install platformio
 ```
 
 ## Documentation
@@ -46,6 +51,38 @@ This way you can use a simple `:make upload` to compile and upload your code to 
 
 ## Other things
 ### Code completion
-To have code completion you'll need the `ccls` language server installed as well as a plugin for vim to use it. For example `coc-nvim` or `vim-lsp`.
+To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or `vim-lsp`.
 
-I suggest also installing the awesome `vim-dispatch` plugin by tpope to be able to run compilations in the background.
+The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
+
+##### MacOS using coc.nvim
+- Install ccls (`brew install ccls`)
+- Install Node.js (`brew install node`)
+- Follow the installation directions for [coc.nvim](https://github.com/neoclide/coc.nvim)
+- Add this to your `coc-settings.json` (no other coc.nvim plugins needed)
+```
+{
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": [ "c", "cpp", "objc", "objcpp" ],
+      "rootPatterns": [ ".ccls", "compile_commands.json" ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    }
+  }
+}
+```
+
+### Background Make
+I suggest also installing the awesome [vim-dispatch](https://github.com/tpope/vim-dispatch) plugin by tpope to be able to run compilations in the background.
+
+### PlatformIO
+This plugin is based on the awesome built-in VIM support of PlatformIO, check out the information [here](https://docs.platformio.org/en/latest/integration/ide/vim.html)
+
