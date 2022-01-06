@@ -24,7 +24,7 @@ of PlatformIO projects.
                           to show the global platformio settings.
 
                                                 *:PIOMonitor*
-:PIOMonitor               Starts a `:term` window with a "pio device monitor"
+:PIOMonitor               Starts a `:term` window with a `:PIO device monitor`
                           command running. Can be opened separately from the
                           main `:PIO` term window.
 
@@ -34,10 +34,14 @@ of PlatformIO projects.
                           'esp32'.
 
                           Pressing <CR> on a board name will create a new
-                          PlatformIO Project in the current folder.
+                          PlatformIO Project in the current folder or add
+                          the board to an existing project.
 
                           This will also create a |Makefile| in the root 
                           folder and a "main.cpp" file in the "src" folder.
+
+                          Running the command `:PIO boards` will display the
+                          same list with the same functions.
 
                                                 *:PIOAddLibrary*
 :PIOAddLibrary {search}   Shows a list of available libraries based on the
@@ -55,7 +59,7 @@ of PlatformIO projects.
                           - author:Adafruit
 
                           The platforms and frameworks of your project are
-                          always added to the search, use the command
+                          always added to this search, use the command
                           `:PIO lib search` directly to avoid this.
 
                                                 *:PIORemoveLibrary*
@@ -68,13 +72,24 @@ of PlatformIO projects.
                           displayed. Can also be used without an argument to
                           refresh the project files.
 
+                          This yields the same result as running the command
+                          `:PIO init --ide vim --board {args}`
+                          or
+                          `:PIO init --ide vim`
+
                                                 *:PIOInstall*
 :PIOInstall {args}        Installs a library by name or id, supports auto-
                           completion of the name. No list is displayed.
 
+                          This yields the same result as running the command
+                          `:PIO lib install {args}`
+
                                                 *:PIOUninstall*
 :PIOUninstall {args}      Removes a library from the project, supports auto-
                           completion of the name. No list is displayed.
+
+                          This yields the same result as running the command
+                          `:PIO lib uninstall {args}`
 
 MAKEFILE                                        *pio-Makefile*
  
