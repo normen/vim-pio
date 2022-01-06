@@ -19,11 +19,14 @@ The commands are the core of the plugin, allowing for basic control
 of PlatformIO projects.
 
                                                 *:PIO*
-:PIO [args]               Works like the shell command, uses a single
-                          `:term` window.
+:PIO {args}               Works like the platformio shell command, uses a
+                          single `:term` window. E.g. use `:PIO settings get`
+                          to show the global platformio settings.
 
-                          E.g. use `:PIO device monitor` to show the serial
-                          port monitor log.
+                                                *:PIOMonitor*
+:PIOMonitor               Starts a `:term` window with a "pio device monitor"
+                          command running. Can be opened separately from the
+                          main `:PIO` term window.
 
                                                 *:PIONewProject*
 :PIONewProject [args]     Shows a list of boards to select from. You can
@@ -71,14 +74,6 @@ of PlatformIO projects.
                                                 *:PIOUninstall*
 :PIOUninstall {args}      Removes a library from the project, supports auto-
                           completion of the name. No list is displayed.
-
-                                                *:PIORefresh*
-:PIORefresh               Refreshes the project files, especially the ".ccls"
-                          file needed for code completion.
-
-                          This usually happens automatically if you manage
-                          the libraries with this plugin.
-
 
 MAKEFILE                                        *pio-Makefile*
  

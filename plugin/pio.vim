@@ -8,9 +8,10 @@ endif
 let g:loaded_vim_pio = 1
 
 command! -nargs=+ -complete=custom,<SID>PIOCommandList PIO call <SID>OpenTermOnce('platformio ' . <q-args>, "Platform IO")
+command! -nargs=* -complete=custom,<SID>PIOCommandList PIOMonitor call <SID>OpenTermOnce('platformio device monitor ' . <q-args>, "PIO Monitor")
 "command! PIOCreateMakefile call <SID>PIOCreateMakefile()
 "command! PIOCreateMain call <SID>PIOCreateMain()
-command! PIORefresh call <SID>PIORefresh()
+"command! PIORefresh call <SID>PIORefresh()
 command! -nargs=* -complete=custom,<SID>PIOBoardList PIONewProject call <SID>PIOBoardSelection(<q-args>)
 command! -nargs=1 -complete=custom,<SID>PIOKeywordList PIOAddLibrary call <SID>PIOInstallSelection(<q-args>)
 command! PIORemoveLibrary call <SID>PIOUninstallSelection()
