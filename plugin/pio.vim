@@ -95,7 +95,7 @@ endfunction
 
 " get a list of PlatformIO boards
 function! s:PIOBoardList(args,L,P)
-  let raw_boards=systemlist("pio boards ".a:args)
+  let raw_boards=systemlist("platformio boards ".a:args)
   let boards=[]
   for boardline in raw_boards
     let board_info=matchlist(boardline,'^\([^\s\t ]*\) .*Hz.*')
@@ -109,7 +109,7 @@ endfunction
 
 " get a list of installed libraries
 function! s:PIOInstalledList(args,L,P)
-  let all_libs = system('pio lib list')
+  let all_libs = system('platformio lib list')
   let idx=0
   let libnames=[]
   while idx!=-1
@@ -128,7 +128,7 @@ endfunction
 " loads keywords from ini to narrow down completion search
 function! s:PIOLibraryList(args,L,P)
   let iniKeywords = <SID>PIOGetIniKeywords()
-  let all_libs = system('pio lib search "'.join(iniKeywords," ").' '.a:args.'*"')
+  let all_libs = system('platformio lib search "'.join(iniKeywords," ").' '.a:args.'*"')
   let idx=0
   let libnames=[]
   while idx!=-1
