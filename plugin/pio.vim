@@ -294,7 +294,8 @@ endfunction
 function! s:OpenTermOnce(command, buffername)
   let winnr = bufwinnr(a:buffername)
   if(winnr>0)
-    execute winnr.'wincmd c'
+    execute 'bd! '.winbufnr(winnr)
+    "execute winnr.'wincmd c'
   endif
   call term_start(a:command,{'term_name':a:buffername})
   if a:command =~ '^platformio *lib *search.*$'
