@@ -58,33 +58,42 @@ endfunction
 
 " get a list of search keywords
 function! s:PIOKeywordList(args,L,P)
-  let commands = [
-        \ 'id:',
+  let commands =[
         \ 'keyword:',
         \ 'header:',
         \ 'framework:',
         \ 'platform:',
         \ 'author:',
+        \ 'id:',
         \ ]
+  let commands += <SID>PIOGetIniKeywords()
+  return join(commands,"\n")
+endfunction
+
+" read the keywords from platformio.ini
+" returns a list of strings like
+" ["platform:espressif8266","framework:arduino"]
+function! s:PIOGetIniKeywords()
+  let commands=[]
   try
     let pio_ini = readfile('platformio.ini')
-  if !empty(pio_ini)
-    for line in pio_ini
-      if line =~ '^platform *=.*'
-        let pltf = substitute(line,"=",":","g")
-        let pltf = substitute(pltf," ","","g")
-        let commands = commands + [pltf]
-      endif
-      if line =~ '^framework *=.*'
-        let pltf = substitute(line,"=",":","g")
-        let pltf = substitute(pltf," ","","g")
-        let commands = commands + [pltf]
-      endif
-    endfor
-  endif
+    if !empty(pio_ini)
+      for line in pio_ini
+        if line =~ '^platform *=.*'
+          let pltf = substitute(line,"=",":","g")
+          let pltf = substitute(pltf," ","","g")
+          let commands = commands + [pltf]
+        endif
+        if line =~ '^framework *=.*'
+          let pltf = substitute(line,"=",":","g")
+          let pltf = substitute(pltf," ","","g")
+          let commands = commands + [pltf]
+        endif
+      endfor
+    endif
   catch
   endtry
-  return join(commands,"\n")
+  return commands
 endfunction
 
 " get a list of PlatformIO boards
@@ -101,7 +110,7 @@ function! s:PIOBoardList(args,L,P)
   return join(boards,"\n")
 endfunction
 
-" get a list of PlatformIO boards
+" get a list of installed libraries
 function! s:PIOInstalledList(args,L,P)
   let all_libs = system('pio lib list')
   let idx=0
@@ -118,9 +127,11 @@ function! s:PIOInstalledList(args,L,P)
   return join(libnames,"\n")
 endfunction
 
-" get a list of PlatformIO boards
+" get a list of online libraries
+" loads keywords from ini to narrow down completion search
 function! s:PIOLibraryList(args,L,P)
-  let all_libs = system('pio lib search "'.a:args.'"')
+  let iniKeywords = <SID>PIOGetIniKeywords()
+  let all_libs = system('pio lib search "'.join(iniKeywords," ").' '.a:args.'"')
   let idx=0
   let libnames=[]
   while idx!=-1
@@ -250,7 +261,8 @@ function! s:PIOInstallSelection(args)
     nnoremap <buffer> <CR> :call <SID>PIOInstall(getline('.'))<CR>
   endif
   echo 'Searching PlatformIO libraries.. Press Ctrl-C to abort'
-  execute 'silent $read !platformio lib search --noninteractive "'.a:args.'"'
+  let iniKeywords = <SID>PIOGetIniKeywords()
+  execute 'silent $read !platformio lib search --noninteractive "'.join(iniKeywords," ").' '.a:args.'"'
   execute append(0,"Help: Press [Enter] on a library name or ID to install")
   setlocal ro nomodifiable
   1

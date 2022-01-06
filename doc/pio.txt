@@ -54,9 +54,9 @@ of PlatformIO projects.
                           - platform:espressif8266
                           - author:Adafruit
 
-                          Auto completion for the command will pick up on
-                          the platforms and frameworks in your project and
-                          offer those as auto-complete items.
+                          The platforms and frameworks of your project are
+                          always added to the search, use the `:PIO` command
+                          directly to avoid this.
 
                                                 *:PIORemoveLibrary*
 :PIORemoveLibrary         Shows a list of installed libraries, press <CR> on
