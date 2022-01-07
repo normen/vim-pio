@@ -76,14 +76,14 @@ function! s:PIOGetIniKeywords()
     let pio_ini = readfile('platformio.ini')
     if !empty(pio_ini)
       for line in pio_ini
-        if line =~ '^platform *=.*'
+        if line =~ '^platform[\t ]*=.*'
           let pltf = substitute(line,"=",":","g")
-          let pltf = substitute(pltf," ","","g")
+          let pltf = substitute(pltf,"[\t ]","","g")
           let commands = commands + [pltf]
         endif
-        if line =~ '^framework *=.*'
+        if line =~ '^framework[\t ]*=.*'
           let pltf = substitute(line,"=",":","g")
-          let pltf = substitute(pltf," ","","g")
+          let pltf = substitute(pltf,"[\t ]","","g")
           let commands = commands + [pltf]
         endif
       endfor
