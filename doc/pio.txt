@@ -115,7 +115,7 @@ OTHER                                           *pio-other*
 
 Code completion~
 To get code completion please install |ccls| and a vim plugin to handle
-language servers (e.g. |coc-nvim|).
+language servers (e.g. |vim-lsp| or |coc-nvim|).
 
 ABOUT                                           *pio-about*
 
