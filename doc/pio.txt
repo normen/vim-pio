@@ -20,11 +20,11 @@ of PlatformIO projects.
 
                                                 *:PIO*
 :PIO {args}               Works like the platformio shell command, uses a
-                          single `:term` window. E.g. use `:PIO settings get`
+                          single `:term` window. E.g. use `:PIO` `settings get`
                           to show the global platformio settings.
 
                                                 *:PIOMonitor*
-:PIOMonitor               Starts a `:term` window with a `:PIO device monitor`
+:PIOMonitor               Starts a `:term` window with a `:PIO` `device monitor`
                           command running. Can be opened separately from the
                           main `:PIO` term window.
 
@@ -38,13 +38,13 @@ of PlatformIO projects.
                           the board to an existing project.
 
                           It is effectively the same as running the command
-                          `:PIO project init --ide vim --board {boardname}`
+                          `:PIO` `project init --ide vim --board {boardname}`
 
                           However `:PIONewProject` will also create a
                           |Makefile| in the root folder and a "main.cpp" file
                           in the "src" folder if they don't exist.
 
-                          Running the command `:PIO boards` will display the
+                          Running the command `:PIO` `boards` will display the
                           same list with the same functions.
 
                                                 *:PIOAddLibrary*
@@ -64,7 +64,7 @@ of PlatformIO projects.
 
                           The platforms and frameworks of your project are
                           always added to this search, use the command
-                          `:PIO lib search` directly to avoid this.
+                          `:PIO` `lib search` directly to avoid this.
 
                                                 *:PIORemoveLibrary*
 :PIORemoveLibrary         Shows a list of installed libraries, press <CR> on
@@ -77,9 +77,9 @@ of PlatformIO projects.
                           refresh the project files.
 
                           This yields the same result as running the command
-                          `:PIO project init --ide vim --board {args}`
+                          `:PIO` `project init --ide vim --board {args}`
                           or
-                          `:PIO project init --ide vim`
+                          `:PIO` `project init --ide vim`
 
                           However this will also create a |Makefile| in the root 
                           folder and a "main.cpp" file in the "src" folder if
@@ -90,14 +90,14 @@ of PlatformIO projects.
                           completion of the name. No list is displayed.
 
                           This yields the same result as running the command
-                          `:PIO lib install {args}`
+                          `:PIO` `lib install {args}`
 
                                                 *:PIOUninstall*
 :PIOUninstall {args}      Removes a library from the project, supports auto-
                           completion of the name. No list is displayed.
 
                           This yields the same result as running the command
-                          `:PIO lib uninstall {args}`
+                          `:PIO` `lib uninstall {args}`
 
 MAKEFILE                                        *pio-Makefile*
  
@@ -108,7 +108,7 @@ The plugin creates a |Makefile| for the project with the following targets:
 - program
 - uploadfs
 
-This way you can use a simple `:make upload` to compile and upload your code
+This way you can use a simple `:make` `upload` to compile and upload your code
 to your microcontroller.
 
 OTHER                                           *pio-other*
