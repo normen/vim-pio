@@ -41,10 +41,10 @@ function! s:PIOCommandList(args,L,P)
         \ 'update':["--core-packages","--only-check","--dry-run","-h"],
         \ 'upgrade':[],
         \ }
-  if a:L=~'^PIO [^ ]*$'
+  if a:L=~'^PIO *[^ ]*$'
     return join(keys(commands),"\n")
-  elseif a:L=~'^PIO [^ ]* .*$'
-    let line_info=matchlist(a:L,'^PIO \([^ ]*\) .*$')
+  elseif a:L=~'^PIO *[^ ]* *.*$'
+    let line_info=matchlist(a:L,'^PIO *\([^ ]*\) *.*$')
     if !empty(line_info)
       let name = get(line_info,1)
       return join(get(commands,name,[]),"\n")
