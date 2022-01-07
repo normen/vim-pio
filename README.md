@@ -47,7 +47,7 @@ The plugin creates a `Makefile`, this way you can use a simple `:make` to compil
 
 ## Other things
 ### Code completion
-To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or `vim-lsp`.
+To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
 
 The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
 
