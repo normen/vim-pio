@@ -174,8 +174,7 @@ function! s:PIOCreateMakefile()
 endfunction
 
 function! s:PIOCreateMain()
-  if filereadable('src/main.cpp')
-    echomsg 'main.cpp exists!'
+  if filereadable('src/main.cpp') || !isdirectory('src')
     return
   endif
   let data=[
