@@ -174,7 +174,8 @@ function! s:PIOCreateMakefile()
 endfunction
 
 function! s:PIOCreateMain()
-  if filereadable('src/main.cpp') || !isdirectory('src')
+  if !isdirectory('src') || len(readdir('src')) > 0
+    " only create in empty source folder
     return
   endif
   let data=[
