@@ -287,7 +287,7 @@ function! pio#OpenTermOnce(command, buffername)
     execute 'bd! '.winbufnr(winnr)
     "execute winnr.'wincmd c'
   endif
-  call term_start(a:command,{'term_name':a:buffername})
+  call termopen(a:command,{'term_name':a:buffername})
   if a:command =~ '^platformio *lib *search.*$'
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call pio#PIOInstall(getline('.'))<CR>
