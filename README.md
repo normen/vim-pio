@@ -1,4 +1,4 @@
-# Vim-PlatformIO
+# Vim-PlatformIO (with clangd support)
 ## Introduction
 This is a collection of helper commands for VIM to ease the use of PlatformIO with VIM.
 
@@ -47,11 +47,13 @@ The plugin creates a `Makefile`, this way you can use a simple `:make` to compil
 
 ## Other things
 ### Code completion
-To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
+To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) or [clangd](https://clangd.llvm.org/) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
 
-The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
+##### AstroNvim
+This should work with [AstroNvim](https://github.com/AstroNvim/AstroNvim) out of the box, as long as you installed `clangd` using the included LSP Installer plugin ([`mason.nvim`](github.com/williamboman/mason.nvim)).
 
 ##### MacOS using coc.nvim
+The following is an example for MacOS with [Homebrew](https://brew.sh) installed:
 - Install ccls (`brew install ccls`)
 - Install Node.js (`brew install node`)
 - Follow the installation directions for [coc.nvim](https://github.com/neoclide/coc.nvim)
@@ -101,4 +103,3 @@ I suggest also installing the awesome [vim-dispatch](https://github.com/tpope/vi
 
 ### Further Info
 This plugin is based on the built-in VIM and ccls support of PlatformIO, check out the information [here](https://docs.platformio.org/en/latest/integration/ide/vim.html)
-
