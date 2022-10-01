@@ -185,6 +185,8 @@ endfunction
 " refresh (initialize) a project with the ide vim to recreate .ccls file
 function! pio#PIORefresh()
   execute 'silent !platformio project init --ide vim'
+  execute 'silent !echo "build_flags = -Ilib -Isrc" >> platformio.ini'
+  execute 'silent !platformio run -t compiledb'
   execute 'redraw!'
 endfunction
 
