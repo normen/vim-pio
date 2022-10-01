@@ -190,12 +190,18 @@ function! pio#PIORefresh()
   execute 'redraw!'
 endfunction
 
-" initialitze a project with a board
+" initialize a project with a board
 function! pio#PIOInit(board)
   if empty(a:board)
     execute '!platformio project init --ide vim'
+    execute 'silent !echo "build_flags = -Ilib -Isrc" >> platformio.ini'
+    execute 'silent !platformio run -t compiledb'
+
   else
     execute '!platformio project init --ide vim --board '.a:board
+    execute 'silent !echo "build_flags = -Ilib -Isrc" >> platformio.ini'
+    execute 'silent !platformio run -t compiledb'
+
   endif
   call pio#PIOCreateMakefile()
   call pio#PIOCreateMain()
