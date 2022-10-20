@@ -52,10 +52,10 @@ To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) 
 The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
 
 ##### MacOS using coc.nvim
-- Install ccls (`brew install ccls`)
+- Install clangd or ccls (`brew install ccls`)
 - Install Node.js (`brew install node`)
 - Follow the installation directions for [coc.nvim](https://github.com/neoclide/coc.nvim)
-- Add this to your `coc-settings.json` (no other coc.nvim plugins needed)
+- For ccls, add this to your `coc-settings.json` (no other coc.nvim plugins needed)
 ```
 {
   "languageserver": {
@@ -77,9 +77,9 @@ The following is an example for MacOS with [Homebrew](https://brew.sh) installed
 ```
 
 ##### MacOS using vim-lsp
-- Install ccls (`brew install ccls`)
+- Install clangd or ccls (`brew install ccls`)
 - Follow the installation directions for [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
-- Add this to your `vimrc`
+- For ccls, add this to your `vimrc`
 ```
 if executable('ccls')
   " disable clangd (pre-installed on MacOS)

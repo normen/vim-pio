@@ -185,15 +185,18 @@ endfunction
 " refresh (initialize) a project with the ide vim to recreate .ccls file
 function! pio#PIORefresh()
   execute 'silent !platformio project init --ide vim'
+  execute 'silent !platformio run -t compiledb'
   execute 'redraw!'
 endfunction
 
 " initialitze a project with a board
 function! pio#PIOInit(board)
   if empty(a:board)
-    execute '!platformio project init --ide vim'
+    execute 'silent !platformio project init --ide vim'
+    execute '!platformio run -t compiledb'
   else
-    execute '!platformio project init --ide vim --board '.a:board
+    execute 'silent !platformio project init --ide vim --board '.a:board
+    execute '!platformio run -t compiledb'
   endif
   call pio#PIOCreateMakefile()
   call pio#PIOCreateMain()
