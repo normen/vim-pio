@@ -5,13 +5,13 @@ endif
 syn sync fromstart
 syn spell notoplevel
 
-syn match piolibrariesInfo /.*\n===.*/ 
+syn match piolibrariesInfo /\n\n.*\n.*•.*/ 
 syn match piolibrariesHeader /^[^#:=\.]*$/ contained containedin=piolibrariesInfo
 syn match piolibrariesId /^#ID: [0-9]*$/
 syn match piolibrariesKeywords /^Version:\|^Keywords:\|^Compatible frameworks:\|^Compatible platforms:\|^Authors:\|^Homepage:\|^License:/
 syn match piolibrariesStorage /^Library Storage:/
 syn match piolibrariesHelp /^Help:/
-syn match piolibrariesFound /^Found [0-9]* libraries:/
+syn match piolibrariesFound /^Found [0-9]* packages/
 hi def link piolibrariesInfo Text
 hi def link piolibrariesHeader Function
 hi def link piolibrariesId Number
