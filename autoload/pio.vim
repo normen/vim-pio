@@ -119,7 +119,7 @@ endfunction
 " get a list of online libraries
 " loads keywords from ini to narrow down completion search
 function! pio#PIOLibraryList(args,L,P)
-  let iniKeywords = pio#PIOGetIniKeywords()
+  let iniKeywords = [] " TODO pio#PIOGetIniKeywords()
   let all_libs = system('platformio pkg search "'.join(iniKeywords," ").' '.a:args.'*"')
   let idx=0
   let libnames=[]
@@ -264,8 +264,8 @@ function! pio#PIOInstallSelection(args)
     nnoremap <buffer> <CR> :call pio#PIOInstall(getline('.'))<CR>
   endif
   echo 'Searching PlatformIO libraries.. Press Ctrl-C to abort'
-  let iniKeywords = pio#PIOGetIniKeywords()
-  execute 'silent $read !platformio lib search --noninteractive "'.join(iniKeywords," ").' '.a:args.'"'
+  let iniKeywords = [] " TODO pio#PIOGetIniKeywords()
+  execute 'silent $read !platformio pkg search "'.join(iniKeywords," ").' '.a:args.'"'
   execute append(0,"Help: Press [Enter] on a library name or ID to install")
   setlocal ro nomodifiable
   1
