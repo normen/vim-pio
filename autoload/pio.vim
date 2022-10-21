@@ -92,7 +92,9 @@ function! pio#PIOBoardList(args,L,P)
     let board_info=matchlist(boardline,'^\([^ ]*\) .*Hz.*')
     if !empty(board_info)
       let name = get(board_info,1)
-      let boards = boards + [name]
+      if index(boards,name) == -1
+        let boards = boards + [name]
+      endif
     endif
   endfor
   return join(boards,"\n")
@@ -107,7 +109,9 @@ function! pio#PIOInstalledList(args,L,P)
     let hit=matchlist(all_libs,'─[^)]*(required: \([^ ]*\)[^)]*)',0,idx)
     if !empty(hit)
       let myhit = get(hit,1)
-      let libnames=libnames + [myhit]
+      if index(libnames,myhit) == -1
+        let libnames=libnames + [myhit]
+      endif
       let idx=idx+1
     else
       let idx=-1
