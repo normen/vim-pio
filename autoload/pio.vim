@@ -107,10 +107,7 @@ function! pio#PIOInstalledList(args,L,P)
     let hit=matchlist(all_libs,'─[^)]*(required: \([^ ]*\)[^)]*)',0,idx)
     if !empty(hit)
       let myhit = get(hit,1)
-      if myhit =~ "^platformio.*"
-      else
-        let libnames=libnames + [myhit]
-      endif
+      let libnames=libnames + [myhit]
       let idx=idx+1
     else
       let idx=-1
