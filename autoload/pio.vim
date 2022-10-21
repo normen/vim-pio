@@ -292,7 +292,7 @@ function! pio#OpenTermOnce(command, buffername)
   endif
   if has('nvim')
     call termopen(a:command,{'term_name':a:buffername})
-  elseif has('vim')
+  else
     call term_start(a:command,{'term_name':a:buffername})
   endif
   if a:command =~ '^platformio *lib *search.*$'
