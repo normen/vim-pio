@@ -11,6 +11,7 @@ Its very much a WIP, its literally just parts of my vimrc outsourced into a plug
 - Select board from a list
 - Create project incl. Makefile
 - Search and install libararies from a list
+- Commands tab-complete boards, libraries
 - Errors and warnings with jumpmarks to relevant code files
 - Supports code completion (needs language server plugin, see below)
 
@@ -35,6 +36,12 @@ Use `:h pio` in vim for documentation of all commands and options.
 ### Basic Commands
 - `:PIO`
   - Mirrors the command line command and opens a term window. Note theres always only one PIO window.
+- `:PIOInit <boardname>`
+  - Supply a board name (tab-completes) and create a new project in the current folder based on that board.
+- `:PIOInstall <libraryname>`
+  - Supply a library name (tab-completes) and install it.
+- `:PIOUninstall <libraryname>`
+  - Supply a library name (tab-completes) and uninstall it.
 - `:PIONewProject <search>`
   - Shows a list of boards, press enter on a board name to create a new project in the current folder based on that board.
 - `:PIOAddLibrary <search>`
@@ -47,7 +54,7 @@ The plugin creates a `Makefile`, this way you can use a simple `:make` to compil
 
 ## Other things
 ### Code completion
-To have code completion you'll need the [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
+To have code completion you'll need the clangd or [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
 
 The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
 

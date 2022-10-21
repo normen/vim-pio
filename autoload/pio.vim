@@ -19,6 +19,7 @@ function! pio#PIOCommandList(args,L,P)
         \ 'device':["list", "monitor","-h"],
         \ 'home':["--port","--host","--no-open","--shutdown-timeout","--session-id","-h"],
         \ 'lib':["builtin","install","list","register","search","show","stats","uninstall","update"],
+        \ 'pkg':["exec","install","list","outdated","pack","publish","search","show","stats","uninstall","unpublish","update"],
         \ 'org':["add","create","destroy","list","remove","update","-h"],
         \ 'package':["pack","publish","unpublish","-h"],
         \ 'platform':["frameworks","install","list","search","show","uninstall","update","-h"],
@@ -88,7 +89,7 @@ function! pio#PIOBoardList(args,L,P)
   let raw_boards=systemlist("platformio boards ".a:args)
   let boards=[]
   for boardline in raw_boards
-    let board_info=matchlist(boardline,'^\([^\s\t ]*\) .*Hz.*')
+    let board_info=matchlist(boardline,'^\([^ ]*\) .*Hz.*')
     if !empty(board_info)
       let name = get(board_info,1)
       let boards = boards + [name]
@@ -99,13 +100,17 @@ endfunction
 
 " get a list of installed libraries
 function! pio#PIOInstalledList(args,L,P)
-  let all_libs = system('platformio lib list')
+  let all_libs = system('platformio pkg list --only-libraries')
   let idx=0
   let libnames=[]
   while idx!=-1
-    let hit=matchlist(all_libs,'\n\([^\n]*\)\n===*',0,idx)
+    let hit=matchlist(all_libs,'─[^)]*(required: \([^ ]*\)[^)]*)',0,idx)
     if !empty(hit)
-      let libnames=libnames + [get(hit,1)]
+      let myhit = get(hit,1)
+      if myhit =~ "^platformio.*"
+      else
+        let libnames=libnames + [myhit]
+      endif
       let idx=idx+1
     else
       let idx=-1
@@ -118,15 +123,12 @@ endfunction
 " loads keywords from ini to narrow down completion search
 function! pio#PIOLibraryList(args,L,P)
   let iniKeywords = pio#PIOGetIniKeywords()
-  let all_libs = system('platformio lib search "'.join(iniKeywords," ").' '.a:args.'*"')
+  let all_libs = system('platformio pkg search "'.join(iniKeywords," ").' '.a:args.'*"')
   let idx=0
   let libnames=[]
   while idx!=-1
-    " match 3 lib info lines:
-    " Library Name
-    " ============
-    " #ID: 999
-    let hit=matchlist(all_libs,'\n\([^\n]*\)\n===*\n#ID: \([0-9]*\)\n',0,idx)
+    " TODO: broken..
+    let hit=matchlist(all_libs,'\n\([^\n]*\)\n[^•\n]*•',0,idx)
     if !empty(hit)
       let libnames=libnames + [get(hit,1)]
       let idx=idx+1
@@ -219,6 +221,16 @@ function! pio#PIOUninstall(library)
   call pio#PIORefresh()
 endfunction
 
+" uninstall a library from a line in library list
+function! pio#PIOUninstallLine()
+  let line = getline('.')
+  let hit=matchlist(line,'─[^)]*(required: \([^ ]*\)[^)]*)')
+  if !empty(hit)
+    let myhit = get(hit,1)
+    call pio#PIOUninstall(myhit)
+  endif
+endfunction
+
 " show a list of libraries for selection
 function! pio#PIOUninstallSelection()
   let winnr = bufwinnr('PIO Uninstall')
@@ -231,10 +243,10 @@ function! pio#PIOUninstallSelection()
     silent file 'PIO Uninstall'
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile wrap
     setlocal filetype=piolibraries
-    nnoremap <buffer> <CR> :call pio#PIOUninstall(getline('.'))<CR>:call pio#PIOUninstallSelection()<CR>
+    nnoremap <buffer> <CR> :call pio#PIOUninstallLine()<CR>:call pio#PIOUninstallSelection()<CR>
   endif
   echo 'Scanning PIO libraries..'
-  execute 'silent $read !platformio lib list'
+  execute 'silent $read !platformio pkg list --only-libraries'
   execute append(0,"Help: Press [Enter] on a library name to uninstall")
   setlocal ro nomodifiable
   1
