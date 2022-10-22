@@ -38,6 +38,7 @@ Use `:h pio` in vim for documentation of all commands and options.
   - Mirrors the command line command and opens a term window. Note theres always only one PIO window.
 - `:PIOInit <boardname>`
   - Supply a board name (tab-completes) and create a new project in the current folder based on that board.
+  - Can be used without a parameter to refresh the project properties and update the LSP files (see below).
 - `:PIOInstall <libraryname>`
   - Supply a library name (tab-completes) and install it.
 - `:PIOUninstall <libraryname>`
@@ -54,53 +55,24 @@ The plugin creates a `Makefile`, this way you can use a simple `:make` to compil
 
 ## Other things
 ### Code completion
-To have code completion you'll need the clangd or [ccls](https://github.com/MaskRay/ccls) language server installed as well as a plugin for vim to use it, for example [coc.nvim](https://github.com/neoclide/coc.nvim) or [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
+To have code completion in vim you'll need the Clangd or CCLS language server installed as well as a plugin for vim to use it.
 
-The following is an example for MacOS with [Homebrew](https://brew.sh) installed.
+Example LSP plugins for vim:
+- [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
+- [Vim9 lsp](https://github.com/yegappan/lsp)
+- nvim LSP (built in)
+- [coc.nvim](https://github.com/neoclide/coc.nvim)
 
-##### MacOS using coc.nvim
-- Install clangd or ccls (`brew install ccls`)
-- Install Node.js (`brew install node`)
-- Follow the installation directions for [coc.nvim](https://github.com/neoclide/coc.nvim)
-- For ccls, add this to your `coc-settings.json` (no other coc.nvim plugins needed)
-```
-{
-  "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": [ "c", "cpp", "objc", "objcpp" ],
-      "rootPatterns": [ ".ccls", "compile_commands.json" ],
-      "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        },
-        "client": {
-          "snippetSupport": true
-        }
-      }
-    }
-  }
-}
-```
+Please refer to the documentation of the LSP plugins for how to set them up.
 
-##### MacOS using vim-lsp
-- Install clangd or ccls (`brew install ccls`)
-- Follow the installation directions for [vim-lsp](https://github.com/prabirshrestha/vim-lsp)
-- For ccls, add this to your `vimrc`
-```
-if executable('ccls')
-  " disable clangd (pre-installed on MacOS)
-  let g:lsp_settings = {
-    \  'clangd': {'disabled': v:true}
-    \}
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'ccls',
-    \ 'cmd': {server_info->['ccls']},
-    \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.ccls'))},
-    \ 'initialization_options': {'cache': {'directory': expand('/tmp/ccls') }},
-    \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-    \ })
-endif
+ `vim-pio` uses PlatformIOs built-in functions to create `.ccls` and `compile-commands.json` files which can be picked up by CCLS and Clangd respectively.
+
+#### Hint
+If Clangd can't pick up the correct folders for some reason, add this to your `platformio.ini`:
+
+ ```
+[default]
+build_flags=-Isrc -Ilib
 ```
 
 ### Background Make
