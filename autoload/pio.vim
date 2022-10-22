@@ -308,7 +308,10 @@ function! pio#OpenTermOnce(command, buffername)
   else
     call term_start(a:command,{'term_name':a:buffername})
   endif
-  if a:command =~ '^platformio *lib *search.*$'
+  if a:command =~ '^platformio *pkg *search.*$'
+    setlocal filetype=piolibraries
+    nnoremap <buffer> <CR> :call pio#PIOInstall(getline('.'))<CR>
+  elseif a:command =~ '^platformio *lib *search.*$'
     setlocal filetype=piolibraries
     nnoremap <buffer> <CR> :call pio#PIOInstall(getline('.'))<CR>
   elseif a:command =~ '^platformio *boards.*$'
