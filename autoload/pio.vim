@@ -212,13 +212,13 @@ function! pio#PIOInstall(library)
   if a:library=~'^#ID:.*'
     let name=a:library[5:]
   endif
-  execute '!platformio lib install "'.name.'"'
+  execute '!platformio pkg install "'.name.'"'
   call pio#PIORefresh()
 endfunction
 
 " install a library using pio
 function! pio#PIOUninstall(library)
-  execute '!platformio lib uninstall "'.a:library.'"'
+  execute '!platformio pkg uninstall "'.a:library.'"'
   call pio#PIORefresh()
 endfunction
 
