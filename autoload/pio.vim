@@ -332,10 +332,12 @@ function! pio#PIOUpload()
 endfunction
 
 function! pio#PIOSerial()
-	execute '!picocom -q '.g:pio_serial_port
+	call VimuxRunCommand('!picocom -q '.g:pio_serial_port)
 endfunction
 
 function! pio#PIOUploadAndSerial()
-	execute '!platformio run --target upload --upload-port '.g:pio_serial_port.';picocom -q '.g:pio_serial_port
+	let ret = pio#PIOUpload()
+  if ret == 0
+    call pio#PIOSerial()
+  endif
 endfunction
-
