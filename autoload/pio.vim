@@ -323,3 +323,26 @@ function! pio#OpenTermOnce(command, buffername)
   endif
 endfunction
 
+function! pio#ChoosePort(port) abort
+	let g:pio_serial_port = a:port
+endfunction
+
+function! pio#Upload() abort
+	execute '!platformio run --terget upload --upload-port '.g:pio_serial_port
+endfunction
+
+function! pio#Serial() abort
+	execute '!picocom -q '.g:pio_serial_port
+endfunction
+
+function! pio#UploadAndSerial()
+  " Since 'terminal!' is non-blocking '!' must be used to provide this functionality
+  let termBackup = s:TERM
+  let s:TERM = '!'
+  let ret = pio#Upload()
+  if ret == 0
+    call pio#Serial()
+  endif
+  let s:TERM = termBackup
+endfunction
+
