@@ -323,15 +323,15 @@ function! pio#OpenTermOnce(command, buffername)
   endif
 endfunction
 
-function! pio#PIOChoosePort(port) abort
+function! pio#PIOChoosePort(port)
 	let g:pio_serial_port = a:port
 endfunction
 
-function! pio#PIOUpload() abort
+function! pio#PIOUpload()
 	execute '!platformio run --terget upload --upload-port '.g:pio_serial_port
 endfunction
 
-function! pio#PIOSerial() abort
+function! pio#PIOSerial()
 	execute '!picocom -q '.g:pio_serial_port
 endfunction
 
