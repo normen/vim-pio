@@ -17,3 +17,7 @@ command! -nargs=* -complete=custom,pio#PIOBoardList PIOInit call pio#PIOInit(<q-
 command! -nargs=1 -complete=custom,pio#PIOLibraryList PIOInstall call pio#PIOInstall(<q-args>)
 command! -nargs=1 -complete=custom,pio#PIOInstalledList PIOUninstall call pio#PIOUninstall(<q-args>)
 
+command! -nargs=1 -complete=custom,pio#PIOChoosePort PIOBoardList call pio#PIOChoosePort(<q-args>)
+command! -nargs=* -complete=custom,pio#PIOUpload PIOUpload call pio#PIOUpload(<q-args>)
+command! -nargs=* -complete=custom,pio#PIOSerial PIOSerial call pio#PIOSerial(<q-args>)
+command! -nargs=* -complete=custom,pio#PIOUploadAndSerial PIOUploadAndSerial call pio#PIOUploadAndSerial(<q-args>)
