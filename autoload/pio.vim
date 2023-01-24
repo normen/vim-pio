@@ -336,9 +336,6 @@ function! pio#PIOSerial()
 endfunction
 
 function! pio#PIOUploadAndSerial()
-  let ret = pio#PIOUpload()
-  if ret == 0
-    call pio#PIOSerial()
-  endif
+	execute '!platformio run --target upload --upload-port '.g:pio_serial_port.';!picocom -q '.g:pio_serial_port
 endfunction
 
