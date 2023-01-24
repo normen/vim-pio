@@ -336,6 +336,6 @@ function! pio#PIOSerial()
 endfunction
 
 function! pio#PIOUploadAndSerial()
-	execute '!platformio run --target upload --upload-port '.g:pio_serial_port.';!picocom -q '.g:pio_serial_port
+	execute '!platformio run --target upload --upload-port '.g:pio_serial_port.';picocom -q '.g:pio_serial_port
 endfunction
 
