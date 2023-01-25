@@ -347,7 +347,7 @@ endfunction
 
 function! pio#PIOUploadAndSerial()
 	let termBackup = s:TERM
-	let s:TERM = '!'
+	""let s:TERM = '!'
 	let ret = pio#PIOUpload()
   if ret == 0
     call pio#PIOSerial()
