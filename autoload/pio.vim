@@ -342,7 +342,7 @@ function! pio#PIOUpload()
 endfunction
 
 function! pio#PIOSerial()
-	exe s:TERM . '!picocom -q '.g:pio_serial_port
+	exe s:TERM . 'picocom -q '.g:pio_serial_port
 endfunction
 
 function! pio#PIOUploadAndSerial()
