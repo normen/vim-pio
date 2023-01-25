@@ -323,6 +323,16 @@ function! pio#OpenTermOnce(command, buffername)
   endif
 endfunction
 
+if has('nvim')
+  let s:TERM = 'botright split | terminal! '
+elseif has('terminal')
+  " In vim, doing terminal! will automatically open in a new split
+  let s:TERM = 'terminal! '
+else
+  " Backwards compatible with old versions of vim
+  let s:TERM = '!'
+endif
+
 function! pio#PIOChoosePort(port)
 	let g:pio_serial_port = a:port
 endfunction
@@ -332,12 +342,15 @@ function! pio#PIOUpload()
 endfunction
 
 function! pio#PIOSerial()
-	call VimuxRunCommand('!picocom -q '.g:pio_serial_port)
+	exe s:TERM . '!picocom -q '.g:pio_serial_port
 endfunction
 
 function! pio#PIOUploadAndSerial()
+	let termBackup = s:TERM
+	let s:TERM = '!'
 	let ret = pio#PIOUpload()
   if ret == 0
     call pio#PIOSerial()
   endif
+  let s:TERM = termBackup
 endfunction
