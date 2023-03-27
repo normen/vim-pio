@@ -7,6 +7,10 @@ if (exists("g:loaded_vim_pio") && g:loaded_vim_pio) || &cp
 endif
 let g:loaded_vim_pio = 1
 
+if !exists("g:pio_serial_baud_rate")
+  let g:pio_serial_baud_rate = 9600
+endif
+
 " get a list of PlatformIO commands
 function! pio#PIOCommandList(args,L,P)
   let commands = {
@@ -342,7 +346,7 @@ function! pio#PIOUpload()
 endfunction
 
 function! pio#PIOSerial()
-	exe s:TERM . 'picocom -q '.g:pio_serial_port
+	exe s:TERM . 'picocom -b '.g:pio_serial_baud_rate.' -q '.g:pio_serial_port
 endfunction
 
 function! pio#PIOUploadAndSerial()
