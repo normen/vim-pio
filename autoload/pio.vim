@@ -332,25 +332,3 @@ else
   " Backwards compatible with old versions of vim
   let s:TERM = '!'
 endif
-
-function! pio#PIOChoosePort(port)
-	let g:pio_serial_port = a:port
-endfunction
-
-function! pio#PIOUpload()
-	execute '!platformio run --target upload --upload-port '.g:pio_serial_port
-endfunction
-
-function! pio#PIOSerial()
-	exe s:TERM . 'picocom -q '.g:pio_serial_port
-endfunction
-
-function! pio#PIOUploadAndSerial()
-	let termBackup = s:TERM
-	""let s:TERM = '!'
-	let ret = pio#PIOUpload()
-  if ret == 0
-    call pio#PIOSerial()
-  endif
-  let s:TERM = termBackup
-endfunction
