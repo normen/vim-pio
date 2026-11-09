@@ -100,6 +100,85 @@ function! pio#PIOBoardList(args,L,P)
   return join(boards,"\n")
 endfunction
 
+" location of the PlatformIO core directory (holds the toolchains)
+function! pio#PIOCoreDir()
+  if !empty($PLATFORMIO_CORE_DIR)
+    return $PLATFORMIO_CORE_DIR
+  endif
+  return expand('~/.platformio')
+endfunction
+
+" true if the given directory holds a PlatformIO project
+function! pio#PIOIsProjectDir(dir)
+  return !empty(a:dir) && filereadable(a:dir . '/platformio.ini')
+endfunction
+
+" Extra command line arguments for a language server.
+"
+" clangd and ccls are not able to know the system include paths of the
+" cross compilers PlatformIO uses (newlib/picolibc headers like
+" machine/endian.h). They end up with a wall of bogus errors on every
+" Arduino header. --query-driver lets them ask the real compiler for the
+" include paths instead.
+"
+" Returns an empty list outside of PlatformIO projects.
+function! pio#PIOLspServerArgs(name)
+  if a:name !~# '^\%(clangd\|ccls\)$'
+    return []
+  endif
+  if !pio#PIOIsProjectDir(getcwd()) && !pio#PIOIsProjectDir(expand('%:p:h'))
+    return []
+  endif
+  let l:core_dir = pio#PIOCoreDir()
+  if empty(l:core_dir) || !isdirectory(l:core_dir)
+    return []
+  endif
+  return ['--query-driver=' . l:core_dir . '/packages/toolchain-*/bin/*']
+endfunction
+
+" Write a .clangd config for clangd.
+"
+" --query-driver gives clangd the C++ include paths of the toolchain but not
+" the GCC internal headers (lib/gcc/<triple>/<version>/include). Those hold
+" the wrappers for limits.h and friends which redirect to the C library.
+" Without them clangd picks up the hosts /usr/include/limits.h and complains
+" about undefined glibc macros.
+"
+" The paths depend on the installed toolchain, so the file is generated and
+" has to be git ignored.
+function! pio#PIOWriteClangdConfig()
+  if !pio#PIOIsProjectDir(getcwd())
+    return
+  endif
+  let l:core_dir = pio#PIOCoreDir()
+  if empty(l:core_dir) || !isdirectory(l:core_dir)
+    return
+  endif
+  let l:includes = []
+  for l:toolchain in glob(l:core_dir . '/packages/toolchain-*', 0, 1)
+    for l:dir in sort(glob(l:toolchain . '/lib/gcc/*/*/include', 0, 1))
+      call add(l:includes, l:dir)
+    endfor
+  endfor
+  if empty(l:includes)
+    return
+  endif
+  let l:data = ['CompileFlags:', '  Add:']
+  for l:dir in l:includes
+    call add(l:data, '    - -isystem')
+    call add(l:data, '    - ' . l:dir)
+  endfor
+  call writefile(l:data, '.clangd')
+  " the file is machine specific, do not track it
+  if filereadable('.gitignore')
+    let l:ignore = readfile('.gitignore')
+    if index(l:ignore, '.clangd') == -1
+      call add(l:ignore, '.clangd')
+      call writefile(l:ignore, '.gitignore')
+    endif
+  endif
+endfunction
+
 " get a list of installed libraries
 function! pio#PIOInstalledList(args,L,P)
   let all_libs = system('platformio pkg list --only-libraries')
@@ -148,7 +227,7 @@ function! pio#PIOCreateMakefile()
   let data=[
     \ "# CREATED BY VIM-PIO",
     \ "all:",
-    \ "	platformio -f -c vim run",
+    \ "	platformio -f -c vim run --target compiledb --target buildprog",
     \ "",
     \ "upload:",
     \ "	platformio -f -c vim run --target upload",
@@ -160,7 +239,16 @@ function! pio#PIOCreateMakefile()
     \ "	platformio -f -c vim run --target program",
     \ "",
     \ "uploadfs:",
-    \ "	platformio -f -c vim run --target uploadfs"]
+    \ "	platformio -f -c vim run --target uploadfs",
+    \ "",
+    \ "# refresh the compile database (clangd) and .ccls (ccls)",
+    \ "compiledb:",
+    \ "	platformio -f -c vim run --target compiledb",
+    \ "	platformio project init --ide vim",
+    \ "	@printf 'CompileFlags:\\n  Add:\\n' > .clangd",
+    \ "	@for d in $${PLATFORMIO_CORE_DIR:-$$HOME/.platformio}/packages/toolchain-*/lib/gcc/*/*/include; do \\",
+    \ "		test -d \"$$d\" && printf '    - -isystem\\n    - %s\\n' \"$$d\"; \\",
+    \ "	done >> .clangd"]
   if writefile(data, 'Makefile')
     echomsg 'write error'
   endif
@@ -189,6 +277,7 @@ endfunction
 function! pio#PIORefresh()
   execute 'silent !platformio project init --ide vim'
   execute 'silent !platformio run -t compiledb'
+  call pio#PIOWriteClangdConfig()
   execute 'redraw!'
 endfunction
 
@@ -203,6 +292,7 @@ function! pio#PIOInit(board)
   endif
   call pio#PIOCreateMakefile()
   call pio#PIOCreateMain()
+  call pio#PIOWriteClangdConfig()
   execute 'redraw!'
 endfunction
 
